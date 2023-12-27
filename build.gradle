@@ -32,10 +32,10 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        'name.remal.template-plugin' {
-            id = 'name.remal.template-plugin'
-            implementationClass = 'name.remal.gradle_plugins.template.TemplatePlugin'
-            displayName = 'Template plugin'
+        'name.remal.merge-resources' {
+            id = 'name.remal.merge-resources'
+            implementationClass = 'name.remal.gradle_plugins.merge_resources.MergeResourcesPlugin'
+            displayName = 'Merge resources'
             description = property('repository-description')
         }
     }
