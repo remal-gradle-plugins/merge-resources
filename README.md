@@ -4,6 +4,6 @@
 
 # `name.remal.merge-resources` plugin
 
-[![configuration cache: supported from v2](https://img.shields.io/static/v1?label=configuration%20cache&message=supported+from+v2.2&color=success)](https://docs.gradle.org/current/userguide/configuration_cache.html)
+[![configuration cache: supported from v2](https://img.shields.io/static/v1?label=configuration%20cache&message=supported+from+v2&color=success)](https://docs.gradle.org/current/userguide/configuration_cache.html)
 
 Gradle plugin template
