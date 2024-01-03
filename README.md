@@ -36,9 +36,17 @@ mergeResources {
     enabled = false // To disable merging `META-INF/spring/*.imports`
   }
 
-  // To merge all `*.txt` files with the same relative path:
-  addResourceMerger('**/*.txt') { RelativePath relativePath, Collection<File> files ->
-    return new ByteArrayInputStream(new byte[0]) // `InputStream` should be returned
+  // To merge all `*.jar` files with the same relative path:
+  addResourceMerger('**/*.jar') { RelativePath relativePath, Collection<File> files ->
+    return new ByteArrayInputStream(new byte[0]) // `InputStream` should be returned `addResourceMerger`
+  }
+
+  // To merge all `*.text` files with the same relative path:
+  addTextResourceMerger('**/*.jar', 'US-ASCII') { RelativePath relativePath, Collection<File> files ->
+    return '' // `String` should be returned for `addTextResourceMerger`
+  }
+  addTextResourceMerger('**/*.jar' /* UTF-8 is default charset */) { RelativePath relativePath, Collection<File> files ->
+    return '' // `String` should be returned for `addTextResourceMerger`
   }
 }
 ```
