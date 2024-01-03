@@ -4,7 +4,7 @@
 org.ow2.asm:asm-bom:9.6:@pom
 org.ow2.asm:asm-tree:9.6
 org.ow2.asm:asm:9.6
-zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.CopyTaskActionMerge:431131f396872f45149b377eaa68ba59b9aab407a5de0bac9712af6084021d3f
+zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.CopyTaskActionMerge:36173fef3dd3c9a96cbb601b849de7bfd89023f3facaa3e2921b010e5fb0ceb6
 zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.DebugUtils$1:b54ff2549f285d153dea71922b4ad8376a35e810e0fd19e71e3da5f0b67bd2d9
 zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.DebugUtils$IfDebugEnabled:29471005b12ce2bc1709cc810237935da9689c9e144fd5024f77ff950b0949b4
 zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.DebugUtils:a1d3fadb484c9b1d4acf81f6ea0ef344d5ab4c135c1448438d507a83d087a7c6
