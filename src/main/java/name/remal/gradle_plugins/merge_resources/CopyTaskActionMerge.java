@@ -55,7 +55,10 @@ class CopyTaskActionMerge extends AbstractCopyTaskAction {
 
         Map<RelativePath, Collection<File>> allFilesToMerge = new LinkedHashMap<>();
         task.getRootSpec().buildRootResolver().getAllSource()
-            .matching(filter -> filter.include(includes))
+            .matching(filter -> {
+                filter.include(includes);
+                filter.exclude(merger.getExcludes());
+            })
             .visit(details -> {
                 if (!details.isDirectory()) {
                     val filesToMerge = allFilesToMerge.computeIfAbsent(

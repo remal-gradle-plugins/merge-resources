@@ -1,7 +1,7 @@
 package name.remal.gradle_plugins.merge_resources;
 
 import static java.lang.String.format;
-import static java.lang.String.join;
+import static java.util.Collections.emptyList;
 import static name.remal.gradle_plugins.toolkit.reflection.ReflectionUtils.unwrapGeneratedSubclass;
 
 import com.google.errorprone.annotations.MustBeClosed;
@@ -24,6 +24,11 @@ public abstract class ResourceMerger {
     @Internal
     protected abstract Collection<String> getIncludes();
 
+    @Internal
+    protected Collection<String> getExcludes() {
+        return emptyList();
+    }
+
     @MustBeClosed
     protected abstract InputStream merge(RelativePath relativePath, Collection<File> files) throws Throwable;
 
@@ -31,9 +36,10 @@ public abstract class ResourceMerger {
     @Override
     public String toString() {
         return format(
-            "%s[%s]",
+            "%s[includes = %s; excludes = %s]",
             unwrapGeneratedSubclass(this.getClass()).getSimpleName(),
-            join(", ", getIncludes())
+            getIncludes(),
+            getExcludes()
         );
     }
 

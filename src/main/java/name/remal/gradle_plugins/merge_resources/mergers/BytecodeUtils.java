@@ -8,7 +8,6 @@ import static name.remal.gradle_plugins.toolkit.ObjectUtils.isEmpty;
 import static org.objectweb.asm.ClassWriter.COMPUTE_FRAMES;
 import static org.objectweb.asm.ClassWriter.COMPUTE_MAXS;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -28,10 +27,6 @@ import org.objectweb.asm.tree.ModuleRequireNode;
 
 @NoArgsConstructor(access = PRIVATE)
 abstract class BytecodeUtils {
-
-    public static ClassNode readClassNode(File file) {
-        return readClassNode(file.toPath());
-    }
 
     @SneakyThrows
     public static ClassNode readClassNode(Path path) {
