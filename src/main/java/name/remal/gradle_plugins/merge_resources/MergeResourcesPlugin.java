@@ -50,7 +50,7 @@ public abstract class MergeResourcesPlugin implements Plugin<Project> {
             )
         );
 
-        task.doFirst("Create " + mergedFilesDir, new CopyTaskActionCreateDir(mergedFilesDir));
+        task.doFirst("Create " + mergedFilesDir, new CopyTaskActionCreateMergedFilesDir(mergedFilesDir));
     }
 
 }
