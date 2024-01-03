@@ -2,3 +2,12 @@
 # Do not modify it yourself unless you know what you are doing.
 
 org.ow2.asm:asm-bom:9.6:@pom
+org.ow2.asm:asm-tree:9.6
+org.ow2.asm:asm:9.6
+zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.CopyTaskActionMerge:431131f396872f45149b377eaa68ba59b9aab407a5de0bac9712af6084021d3f
+zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.DebugUtils$1:b54ff2549f285d153dea71922b4ad8376a35e810e0fd19e71e3da5f0b67bd2d9
+zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.DebugUtils$IfDebugEnabled:29471005b12ce2bc1709cc810237935da9689c9e144fd5024f77ff950b0949b4
+zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.DebugUtils:a1d3fadb484c9b1d4acf81f6ea0ef344d5ab4c135c1448438d507a83d087a7c6
+zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.TaskUtils:ccb26f1c18e87896c917348e7752261af34d6cadc64da0ca0c171d3fce98a9c
+zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.Version:578440e8e53b9bbb1b65575801b87f34eda9dfbe3e2beb95e12e9a1a5ef5ecb2
+zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.reflection.ReflectionUtils:b4d0544cca0ecf330dbcab1f25d38160a5ead0f0a31d29b470afd3796533004d
