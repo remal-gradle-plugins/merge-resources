@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
 
+@SuppressWarnings("java:S5778")
 class PackageInfoMergerTest {
 
     final FileSystem fs = Jimfs.newFileSystem(unix());

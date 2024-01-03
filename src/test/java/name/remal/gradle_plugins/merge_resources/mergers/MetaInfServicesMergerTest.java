@@ -14,6 +14,7 @@ import java.nio.file.FileSystem;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("java:S5778")
 class MetaInfServicesMergerTest {
 
     final FileSystem fs = Jimfs.newFileSystem(unix());

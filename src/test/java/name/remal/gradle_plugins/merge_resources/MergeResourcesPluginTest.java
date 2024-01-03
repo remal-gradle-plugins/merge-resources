@@ -1,6 +1,6 @@
 package name.remal.gradle_plugins.merge_resources;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import lombok.RequiredArgsConstructor;
 import org.gradle.api.Project;
@@ -18,8 +18,9 @@ class MergeResourcesPluginTest {
     }
 
     @Test
-    void test() {
-        assertTrue(project.getPlugins().hasPlugin(MergeResourcesPlugin.class));
+    void extensionAdded() {
+        assertDoesNotThrow(() -> project.getExtensions().getByType(MergeResourcesExtension.class));
+        assertDoesNotThrow(() -> project.getExtensions().getByName("mergeResources"));
     }
 
 }
