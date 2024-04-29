@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -26,6 +27,11 @@ import org.objectweb.asm.tree.ClassNode;
 class PackageInfoMergerTest {
 
     final FileSystem fs = Jimfs.newFileSystem(unix());
+
+    @AfterEach
+    void afterEach() throws Throwable {
+        fs.close();
+    }
 
     @Test
     void packageInfoWithMostNumberOfAnnotationsIsTaken() throws Throwable {

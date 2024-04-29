@@ -12,12 +12,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.google.common.jimfs.Jimfs;
 import java.nio.file.FileSystem;
 import lombok.val;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("java:S5778")
 class MetaInfServicesMergerTest {
 
     final FileSystem fs = Jimfs.newFileSystem(unix());
+
+    @AfterEach
+    void afterEach() throws Throwable {
+        fs.close();
+    }
 
     @Test
     void commentsBlankStringsAndDuplicatesAreRemoved() throws Throwable {
