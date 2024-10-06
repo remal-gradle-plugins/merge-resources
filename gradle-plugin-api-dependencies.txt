@@ -2,8 +2,8 @@
 # Do not modify it yourself unless you know what you are doing.
 
 org.ow2.asm:asm-bom:9.7:@pom
-org.ow2.asm:asm-tree:9.7
-org.ow2.asm:asm:9.7
+org.ow2.asm:asm-tree:9.7.1
+org.ow2.asm:asm:9.7.1
 zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.CopyTaskActionMerge:d6e8afbf2e76f07ce06768be958731e062f92bc13d3b3ab1ecad593e8b98e908
 zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.DebugUtils$1:b54ff2549f285d153dea71922b4ad8376a35e810e0fd19e71e3da5f0b67bd2d9
 zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.DebugUtils$IfDebugEnabled:29471005b12ce2bc1709cc810237935da9689c9e144fd5024f77ff950b0949b4
