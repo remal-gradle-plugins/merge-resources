@@ -1,7 +1,7 @@
 # This file is generated automatically by `collectAllGradlePluginApiDependencies` Gradle task.
 # Do not modify it yourself unless you know what you are doing.
 
-org.ow2.asm:asm-bom:9.7:@pom
+org.ow2.asm:asm-bom:9.7.1:@pom
 org.ow2.asm:asm-tree:9.7.1
 org.ow2.asm:asm:9.7.1
 zzzz-classes-that-rely-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.CopyTaskActionMerge:d6e8afbf2e76f07ce06768be958731e062f92bc13d3b3ab1ecad593e8b98e908
