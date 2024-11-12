@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
+import name.remal.gradle_plugins.merge_resources.mergers.Log4j2PluginsMerger;
 import name.remal.gradle_plugins.merge_resources.mergers.MetaInfServicesMerger;
 import name.remal.gradle_plugins.merge_resources.mergers.ModuleInfoMerger;
 import name.remal.gradle_plugins.merge_resources.mergers.PackageInfoMerger;
@@ -137,6 +138,13 @@ public abstract class MergeResourcesExtension {
 
     public void springImports(Action<SpringImportsMerger> action) {
         action.execute(springImports);
+    }
+
+
+    private final Log4j2PluginsMerger log4j2PluginsMerger = getObjects().newInstance(Log4j2PluginsMerger.class);
+
+    public void log4j2PluginsMerger(Action<Log4j2PluginsMerger> action) {
+        action.execute(log4j2PluginsMerger);
     }
 
 

@@ -27,7 +27,13 @@ apply plugin: 'name.remal.toolkit.build-logic'
 
 apply plugin: 'java-gradle-plugin'
 
+String log4j2Version = '2.24.1'
+
 dependencies {
+    compileOnlyAll 'org.osgi:osgi.annotation:8.1.0'
+
+    relocateClasses "org.apache.logging.log4j:log4j-core:$log4j2Version"
+
     compileOnly 'org.ow2.asm:asm-util'
 
     api 'org.ow2.asm:asm-tree'
@@ -35,6 +41,9 @@ dependencies {
 
     testImplementation 'com.google.jimfs:jimfs:1.3.0'
     testImplementation 'org.ow2.asm:asm-util'
+    testImplementation "org.apache.logging.log4j:log4j-core:$log4j2Version"
+    testImplementation "org.apache.logging.log4j:log4j-docker:$log4j2Version"
+    testImplementation 'pw.krejci:tracedepth-log4j2-plugin:0.1.0'
 }
 
 gradlePlugin {

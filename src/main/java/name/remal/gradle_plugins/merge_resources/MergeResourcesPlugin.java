@@ -39,6 +39,7 @@ public abstract class MergeResourcesPlugin implements Plugin<Project> {
         mergers.add(extension.getPackageInfo());
         mergers.add(extension.getSpringFactories());
         mergers.add(extension.getSpringImports());
+        mergers.add(extension.getLog4j2PluginsMerger());
         mergers.addAll(extension.getResourceMergers().getOrElse(emptyList()));
 
         mergers.removeIf(merger -> FALSE.equals(merger.getEnabled().getOrNull()));
