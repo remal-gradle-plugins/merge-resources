@@ -1,6 +1,5 @@
 package name.remal.gradle_plugins.merge_resources;
 
-import static com.google.common.io.ByteStreams.copy;
 import static java.nio.file.Files.newOutputStream;
 import static name.remal.gradle_plugins.toolkit.ObjectUtils.isEmpty;
 import static name.remal.gradle_plugins.toolkit.PathUtils.createParentDirectories;
@@ -79,18 +78,20 @@ class CopyTaskActionMerge extends AbstractCopyTaskAction {
                 filter.exclude(merger.getExcludes());
             })
             .visit(details -> {
-                if (!details.isDirectory()) {
-                    val relativePath = details.getRelativePath();
-                    val filesToMerge = allFilesToMerge.computeIfAbsent(relativePath, __ -> new LinkedHashSet<>());
-                    val file = details.getFile();
-                    filesToMerge.add(file);
-                    logger.debug(
-                        "{}: found merging candidate for for relative path `{}`: {}",
-                        this,
-                        relativePath,
-                        file
-                    );
+                if (details.isDirectory()) {
+                    return;
                 }
+
+                val relativePath = details.getRelativePath();
+                val filesToMerge = allFilesToMerge.computeIfAbsent(relativePath, __ -> new LinkedHashSet<>());
+                val file = details.getFile();
+                filesToMerge.add(file);
+                logger.debug(
+                    "{}: found merging candidate for for relative path `{}`: {}",
+                    this,
+                    relativePath,
+                    file
+                );
             });
 
         return allFilesToMerge;
@@ -104,13 +105,12 @@ class CopyTaskActionMerge extends AbstractCopyTaskAction {
         Collection<File> files
     ) {
         logger.debug("{}: merging files for relative path `{}`: {}", this, relativePath, files);
-        try (val inputStream = merger.merge(relativePath, files)) {
-            val targetFilePath = new File(mergedFilesDir, relativePath.toString()).toPath();
-            createParentDirectories(targetFilePath);
 
-            try (val outputStream = newOutputStream(targetFilePath)) {
-                copy(inputStream, outputStream);
-            }
+        val targetFilePath = new File(mergedFilesDir, relativePath.toString()).toPath();
+        createParentDirectories(targetFilePath);
+
+        try (val outputStream = newOutputStream(targetFilePath)) {
+            merger.mergeTo(relativePath, files, outputStream);
         }
     }
 

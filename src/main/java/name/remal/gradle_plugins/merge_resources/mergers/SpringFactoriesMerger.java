@@ -10,9 +10,8 @@ import static name.remal.gradle_plugins.toolkit.PropertiesUtils.loadProperties;
 import static org.apache.commons.text.translate.EntityArrays.JAVA_CTRL_CHARS_ESCAPE;
 
 import com.google.common.annotations.VisibleForTesting;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -48,15 +47,24 @@ public abstract class SpringFactoriesMerger extends ResourceMerger {
     }
 
     @Override
-    protected InputStream merge(RelativePath relativePath, Collection<File> files) throws Throwable {
-        return mergeSpringFactories(files.stream()
-            .map(File::toPath)
-            .collect(toList())
+    protected void mergeTo(
+        RelativePath relativePath,
+        Collection<File> files,
+        OutputStream outputStream
+    ) throws Throwable {
+        mergeSpringFactoriesTo(
+            files.stream()
+                .map(File::toPath)
+                .collect(toList()),
+            outputStream
         );
     }
 
     @VisibleForTesting
-    static InputStream mergeSpringFactories(Collection<Path> paths) {
+    static void mergeSpringFactoriesTo(
+        Collection<Path> paths,
+        OutputStream outputStream
+    ) throws Throwable {
         val allServices = new TreeMap<String, Set<String>>();
         for (val path : paths) {
             val properties = loadProperties(path);
@@ -90,7 +98,7 @@ public abstract class SpringFactoriesMerger extends ResourceMerger {
             }
         });
         val bytes = content.toString().getBytes(UTF_8);
-        return new ByteArrayInputStream(bytes);
+        outputStream.write(bytes);
     }
 
 }

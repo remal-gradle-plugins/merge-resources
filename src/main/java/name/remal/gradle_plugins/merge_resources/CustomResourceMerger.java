@@ -4,7 +4,7 @@ import static java.util.Collections.unmodifiableCollection;
 import static lombok.AccessLevel.PUBLIC;
 
 import java.io.File;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collection;
 import javax.inject.Inject;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +22,12 @@ abstract class CustomResourceMerger extends ResourceMerger {
     }
 
     @Override
-    protected InputStream merge(RelativePath relativePath, Collection<File> files) throws Throwable {
-        return merger.merge(relativePath, files);
+    protected void mergeTo(
+        RelativePath relativePath,
+        Collection<File> files,
+        OutputStream outputStream
+    ) throws Throwable {
+        merger.mergeTo(relativePath, files, outputStream);
     }
 
 }

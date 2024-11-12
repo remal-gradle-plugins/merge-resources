@@ -6,10 +6,10 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.write;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static name.remal.gradle_plugins.toolkit.InputOutputStreamUtils.readStringFromStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.google.common.jimfs.Jimfs;
+import java.io.ByteArrayOutputStream;
 import java.nio.file.FileSystem;
 import lombok.val;
 import org.junit.jupiter.api.AfterEach;
@@ -37,8 +37,10 @@ class SpringFactoriesMergerTest {
             ""
         ).getBytes(UTF_8));
 
-        try (val inputStream = SpringFactoriesMerger.mergeSpringFactories(singletonList(path))) {
-            val content = readStringFromStream(inputStream, UTF_8);
+        try (val outputStream = new ByteArrayOutputStream()) {
+            SpringFactoriesMerger.mergeSpringFactoriesTo(singletonList(path), outputStream);
+
+            val content = new String(outputStream.toByteArray(), UTF_8);
             assertThat(content).isEqualTo(join(
                 "\n",
                 "service = \\",
@@ -58,8 +60,10 @@ class SpringFactoriesMergerTest {
             ""
         ).getBytes(UTF_8));
 
-        try (val inputStream = SpringFactoriesMerger.mergeSpringFactories(singletonList(path))) {
-            val content = readStringFromStream(inputStream, UTF_8);
+        try (val outputStream = new ByteArrayOutputStream()) {
+            SpringFactoriesMerger.mergeSpringFactoriesTo(singletonList(path), outputStream);
+
+            val content = new String(outputStream.toByteArray(), UTF_8);
             assertThat(content).isEqualTo(join(
                 "\n",
                 "service1 = \\",
@@ -87,8 +91,10 @@ class SpringFactoriesMergerTest {
             "service = impl2"
         ).getBytes(UTF_8));
 
-        try (val inputStream = SpringFactoriesMerger.mergeSpringFactories(asList(path1, path2))) {
-            val content = readStringFromStream(inputStream, UTF_8);
+        try (val outputStream = new ByteArrayOutputStream()) {
+            SpringFactoriesMerger.mergeSpringFactoriesTo(asList(path1, path2), outputStream);
+
+            val content = new String(outputStream.toByteArray(), UTF_8);
             assertThat(content).isEqualTo(join(
                 "\n",
                 "service = \\",

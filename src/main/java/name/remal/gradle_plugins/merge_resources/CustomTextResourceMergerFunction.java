@@ -1,12 +1,17 @@
 package name.remal.gradle_plugins.merge_resources;
 
 import java.io.File;
+import java.io.Writer;
 import java.util.Collection;
 import org.gradle.api.file.RelativePath;
 
 @FunctionalInterface
 public interface CustomTextResourceMergerFunction {
 
-    String merge(RelativePath relativePath, Collection<File> files) throws Throwable;
+    void mergeTo(
+        RelativePath relativePath,
+        Collection<File> files,
+        Writer writer
+    ) throws Throwable;
 
 }

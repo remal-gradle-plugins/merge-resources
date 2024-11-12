@@ -1,5 +1,6 @@
 package name.remal.gradle_plugins.merge_resources.mergers;
 
+import static com.google.common.io.ByteStreams.copy;
 import static java.lang.String.format;
 import static java.nio.file.Files.newInputStream;
 import static java.util.Collections.singletonList;
@@ -11,7 +12,7 @@ import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeUtils.re
 
 import com.google.common.annotations.VisibleForTesting;
 import java.io.File;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -28,15 +29,24 @@ public abstract class PackageInfoMerger extends ResourceMerger {
     }
 
     @Override
-    protected InputStream merge(RelativePath relativePath, Collection<File> files) throws Throwable {
-        return mergePackageInfos(files.stream()
-            .map(File::toPath)
-            .collect(toList())
+    protected void mergeTo(
+        RelativePath relativePath,
+        Collection<File> files,
+        OutputStream outputStream
+    ) throws Throwable {
+        mergePackageInfosTo(
+            files.stream()
+                .map(File::toPath)
+                .collect(toList()),
+            outputStream
         );
     }
 
     @VisibleForTesting
-    static InputStream mergePackageInfos(Collection<Path> paths) throws Throwable {
+    static void mergePackageInfosTo(
+        Collection<Path> paths,
+        OutputStream outputStream
+    ) throws Throwable {
         if (paths.size() <= 1) {
             throw new IllegalArgumentException("paths must have multiple elements");
         }
@@ -69,7 +79,9 @@ public abstract class PackageInfoMerger extends ResourceMerger {
             }
         });
 
-        return newInputStream(resultPath);
+        try (val inputStream = newInputStream(resultPath)) {
+            copy(inputStream, outputStream);
+        }
     }
 
 }

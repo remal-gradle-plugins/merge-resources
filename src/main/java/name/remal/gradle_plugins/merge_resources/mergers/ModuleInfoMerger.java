@@ -13,9 +13,8 @@ import static name.remal.gradle_plugins.toolkit.ObjectUtils.isEmpty;
 import static name.remal.gradle_plugins.toolkit.PredicateUtils.not;
 
 import com.google.common.annotations.VisibleForTesting;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,15 +41,24 @@ public abstract class ModuleInfoMerger extends ResourceMerger {
     }
 
     @Override
-    protected InputStream merge(RelativePath relativePath, Collection<File> files) {
-        return mergeModuleInfos(files.stream()
-            .map(File::toPath)
-            .collect(toList())
+    protected void mergeTo(
+        RelativePath relativePath,
+        Collection<File> files,
+        OutputStream outputStream
+    ) throws Throwable {
+        mergeModuleInfosTo(
+            files.stream()
+                .map(File::toPath)
+                .collect(toList()),
+            outputStream
         );
     }
 
     @VisibleForTesting
-    static InputStream mergeModuleInfos(Collection<Path> paths) {
+    static void mergeModuleInfosTo(
+        Collection<Path> paths,
+        OutputStream outputStream
+    ) throws Throwable {
         if (paths.size() <= 1) {
             throw new IllegalArgumentException("paths must have multiple elements");
         }
@@ -73,7 +81,7 @@ public abstract class ModuleInfoMerger extends ResourceMerger {
         mergeInto(classNodes.values(), targetClassNode);
 
         val bytes = getBytecode(targetClassNode);
-        return new ByteArrayInputStream(bytes);
+        outputStream.write(bytes);
     }
 
     @SuppressWarnings("java:S3776")

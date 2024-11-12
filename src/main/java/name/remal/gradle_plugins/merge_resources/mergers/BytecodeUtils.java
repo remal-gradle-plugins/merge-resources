@@ -4,6 +4,8 @@ import static java.nio.file.Files.readAllBytes;
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.PRIVATE;
+import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeTestUtils.wrapWithTestClassVisitors;
+import static name.remal.gradle_plugins.toolkit.InTestFlags.isInUnitTest;
 import static name.remal.gradle_plugins.toolkit.ObjectUtils.isEmpty;
 import static org.objectweb.asm.ClassWriter.COMPUTE_FRAMES;
 import static org.objectweb.asm.ClassWriter.COMPUTE_MAXS;
@@ -20,6 +22,7 @@ import lombok.SneakyThrows;
 import lombok.val;
 import org.jetbrains.annotations.Contract;
 import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -27,6 +30,8 @@ import org.objectweb.asm.tree.ModuleRequireNode;
 
 @NoArgsConstructor(access = PRIVATE)
 abstract class BytecodeUtils {
+
+    private static final boolean IN_TEST = isInUnitTest();
 
     @SneakyThrows
     public static ClassNode readClassNode(Path path) {
@@ -51,7 +56,11 @@ abstract class BytecodeUtils {
 
     public static byte[] getBytecode(ClassNode classNode) {
         val classWriter = new ClassWriter(COMPUTE_MAXS | COMPUTE_FRAMES);
-        classNode.accept(classWriter);
+        ClassVisitor classVisitor = classWriter;
+        if (IN_TEST) {
+            classVisitor = wrapWithTestClassVisitors(classVisitor);
+        }
+        classNode.accept(classVisitor);
         return classWriter.toByteArray();
     }
 

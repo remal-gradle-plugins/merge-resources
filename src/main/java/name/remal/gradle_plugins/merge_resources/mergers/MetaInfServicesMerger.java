@@ -9,9 +9,8 @@ import static name.remal.gradle_plugins.toolkit.FunctionUtils.toSubstringedBefor
 import static name.remal.gradle_plugins.toolkit.InputOutputStreamUtils.readStringFromStream;
 
 import com.google.common.annotations.VisibleForTesting;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -37,15 +36,24 @@ public abstract class MetaInfServicesMerger extends ResourceMerger {
     }
 
     @Override
-    protected InputStream merge(RelativePath relativePath, Collection<File> files) throws Throwable {
-        return mergeMetaInfServices(files.stream()
-            .map(File::toPath)
-            .collect(toList())
+    protected void mergeTo(
+        RelativePath relativePath,
+        Collection<File> files,
+        OutputStream outputStream
+    ) throws Throwable {
+        mergeMetaInfServicesTo(
+            files.stream()
+                .map(File::toPath)
+                .collect(toList()),
+            outputStream
         );
     }
 
     @VisibleForTesting
-    static InputStream mergeMetaInfServices(Collection<Path> paths) throws Throwable {
+    static void mergeMetaInfServicesTo(
+        Collection<Path> paths,
+        OutputStream outputStream
+    ) throws Throwable {
         val services = new LinkedHashSet<String>();
         for (val path : paths) {
             final String content;
@@ -62,7 +70,7 @@ public abstract class MetaInfServicesMerger extends ResourceMerger {
 
         val mergedContent = join("\n", services);
         val bytes = mergedContent.getBytes(UTF_8);
-        return new ByteArrayInputStream(bytes);
+        outputStream.write(bytes);
     }
 
 }
