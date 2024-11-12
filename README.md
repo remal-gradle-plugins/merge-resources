@@ -65,9 +65,9 @@ When these files are merged, all comments and duplications are removed.
 
 ### `**/package-info.class`
 
-The file with the most number of package annotations is taken.
+The file with the biggest number of package annotations is taken.
 
-For the other files, there is a check that validates that their package annotations present in the result file.
+For the other files, there is a check that validates their package annotations present in the result file.
 
 ### `**/module-info.class`
 
@@ -84,3 +84,15 @@ See [`org.springframework.core.io.support.SpringFactoriesLoader`](https://docs.s
 See [`META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.developing-auto-configuration) files.
 
 See [`org.springframework.boot.context.annotation.ImportCandidates`](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/context/annotation/ImportCandidates.html).
+
+# Migration guide
+
+## Version 2.* to 3.*
+
+Resource merges do not return `InputStream` anymore.
+`OutputStream` is provided as a parameter instead for `mergeResources.addResourceMerger()`.
+`PrintWriter` is provided as a parameter instead for `mergeResources.addTextResourceMerger()`.
+
+## Version 1.* to 2.*
+
+The plugin was fully rewritten. There were no intentions to keep backward compatibility.
