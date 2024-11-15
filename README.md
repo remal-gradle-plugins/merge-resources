@@ -35,6 +35,9 @@ mergeResources {
   springImports {
     enabled = false // To disable merging `META-INF/spring/*.imports`
   }
+  log4j2PluginsMerger {
+    enabled = false // To disable merging `META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat`
+  }
 
   // To merge all `*.jar` files with the same relative path:
   addResourceMerger('**/*.jar') { RelativePath relativePath, Collection<File> files, OutputStream outputStream ->
@@ -84,6 +87,10 @@ See [`org.springframework.core.io.support.SpringFactoriesLoader`](https://docs.s
 See [`META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.developing-auto-configuration) files.
 
 See [`org.springframework.boot.context.annotation.ImportCandidates`](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/context/annotation/ImportCandidates.html).
+
+### `META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat`
+
+See [documentation about Log4j plugin descriptor](https://logging.apache.org/log4j/2.x/manual/plugins.html#plugin-registry).
 
 # Migration guide
 
