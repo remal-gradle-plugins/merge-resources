@@ -1,12 +1,9 @@
 package name.remal.gradle_plugins.merge_resources;
 
-import static java.lang.Boolean.FALSE;
-import static java.util.Collections.emptyList;
 import static name.remal.gradle_plugins.toolkit.ObjectUtils.doNotInline;
 import static name.remal.gradle_plugins.toolkit.TaskUtils.doBeforeTaskExecution;
 
 import java.io.File;
-import java.util.ArrayList;
 import lombok.val;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -25,8 +22,9 @@ public abstract class MergeResourcesPlugin implements Plugin<Project> {
     }
 
     private static void configureCopyTask(AbstractCopyTask task, MergeResourcesExtension extension) {
-        doBeforeTaskExecution(task, it ->
-            beforeTaskExecution(it, extension)
+        doBeforeTaskExecution(
+            task, it ->
+                beforeTaskExecution(it, extension)
         );
     }
 
@@ -34,16 +32,7 @@ public abstract class MergeResourcesPlugin implements Plugin<Project> {
         val mergedFilesDir = new File(task.getTemporaryDir().getAbsolutePath() + ".merged-files");
         task.from(mergedFilesDir);
 
-        val mergers = new ArrayList<ResourceMerger>();
-        mergers.add(extension.getMetaInfServices());
-        mergers.add(extension.getPackageInfo());
-        mergers.add(extension.getSpringFactories());
-        mergers.add(extension.getSpringImports());
-        mergers.add(extension.getLog4j2PluginsMerger());
-        mergers.addAll(extension.getResourceMergers().getOrElse(emptyList()));
-
-        mergers.removeIf(merger -> FALSE.equals(merger.getEnabled().getOrNull()));
-
+        val mergers = extension.getAllEnabledResourceMergers();
         mergers.forEach(merger ->
             task.doFirst(
                 merger.toString(),

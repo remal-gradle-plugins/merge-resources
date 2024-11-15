@@ -1,11 +1,16 @@
 package name.remal.gradle_plugins.merge_resources;
 
+import static java.lang.Boolean.FALSE;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.singletonList;
+import static java.util.Collections.unmodifiableCollection;
+import static java.util.stream.Collectors.toList;
+import static name.remal.gradle_plugins.toolkit.PredicateUtils.not;
 
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.stream.Stream;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +24,7 @@ import name.remal.gradle_plugins.merge_resources.mergers.SpringImportsMerger;
 import org.gradle.api.Action;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ListProperty;
+import org.jetbrains.annotations.Unmodifiable;
 
 @Getter
 @Setter
@@ -145,6 +151,34 @@ public abstract class MergeResourcesExtension {
 
     public void log4j2PluginsMerger(Action<Log4j2PluginsMerger> action) {
         action.execute(log4j2PluginsMerger);
+    }
+
+
+    @Unmodifiable
+    public final Collection<ResourceMerger> getAllResourceMergers() {
+        return unmodifiableCollection(
+            Stream.concat(
+                    getResourceMergers().get().stream(),
+                    Stream.of(
+                        metaInfServices,
+                        packageInfo,
+                        moduleInfo,
+                        springFactories,
+                        springImports,
+                        log4j2PluginsMerger
+                    )
+                )
+                .collect(toList())
+        );
+    }
+
+    @Unmodifiable
+    public final Collection<ResourceMerger> getAllEnabledResourceMergers() {
+        return unmodifiableCollection(
+            getAllResourceMergers().stream()
+                .filter(not(merger -> FALSE.equals(merger.getEnabled().getOrNull())))
+                .collect(toList())
+        );
     }
 
 
