@@ -21,14 +21,14 @@ public abstract class ResourceMerger {
 
 
     @Internal
-    protected abstract Collection<String> getIncludes();
+    public abstract Collection<String> getIncludes();
 
     @Internal
-    protected Collection<String> getExcludes() {
+    public Collection<String> getExcludes() {
         return emptyList();
     }
 
-    protected abstract void mergeTo(
+    public abstract void mergeTo(
         RelativePath relativePath,
         Collection<File> files,
         OutputStream outputStream

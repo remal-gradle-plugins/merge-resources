@@ -42,12 +42,12 @@ public abstract class SpringFactoriesMerger extends ResourceMerger {
 
 
     @Override
-    protected Collection<String> getIncludes() {
+    public Collection<String> getIncludes() {
         return singletonList("META-INF/spring.factories");
     }
 
     @Override
-    protected void mergeTo(
+    public void mergeTo(
         RelativePath relativePath,
         Collection<File> files,
         OutputStream outputStream

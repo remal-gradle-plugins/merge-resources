@@ -24,12 +24,12 @@ import org.objectweb.asm.tree.ClassNode;
 public abstract class PackageInfoMerger extends ResourceMerger {
 
     @Override
-    protected Collection<String> getIncludes() {
+    public Collection<String> getIncludes() {
         return singletonList("**/package-info.class");
     }
 
     @Override
-    protected void mergeTo(
+    public void mergeTo(
         RelativePath relativePath,
         Collection<File> files,
         OutputStream outputStream

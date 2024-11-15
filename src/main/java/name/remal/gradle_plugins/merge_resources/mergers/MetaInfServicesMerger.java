@@ -26,17 +26,17 @@ public abstract class MetaInfServicesMerger extends ResourceMerger {
 
 
     @Override
-    protected Collection<String> getIncludes() {
+    public Collection<String> getIncludes() {
         return singletonList("META-INF/services/*");
     }
 
     @Override
-    protected Collection<String> getExcludes() {
+    public Collection<String> getExcludes() {
         return singletonList("META-INF/services/org.codehaus.groovy.runtime.ExtensionModule");
     }
 
     @Override
-    protected void mergeTo(
+    public void mergeTo(
         RelativePath relativePath,
         Collection<File> files,
         OutputStream outputStream

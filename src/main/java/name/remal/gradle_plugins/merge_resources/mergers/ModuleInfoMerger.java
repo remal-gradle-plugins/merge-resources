@@ -36,12 +36,12 @@ import org.objectweb.asm.tree.ModuleProvideNode;
 public abstract class ModuleInfoMerger extends ResourceMerger {
 
     @Override
-    protected Collection<String> getIncludes() {
+    public Collection<String> getIncludes() {
         return singletonList("**/module-info.class");
     }
 
     @Override
-    protected void mergeTo(
+    public void mergeTo(
         RelativePath relativePath,
         Collection<File> files,
         OutputStream outputStream

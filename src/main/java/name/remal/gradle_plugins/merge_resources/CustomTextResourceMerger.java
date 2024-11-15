@@ -22,12 +22,12 @@ abstract class CustomTextResourceMerger extends ResourceMerger {
     private final CustomTextResourceMergerFunction merger;
 
     @Override
-    protected Collection<String> getIncludes() {
+    public Collection<String> getIncludes() {
         return unmodifiableCollection(includes);
     }
 
     @Override
-    protected void mergeTo(
+    public void mergeTo(
         RelativePath relativePath,
         Collection<File> files,
         OutputStream outputStream

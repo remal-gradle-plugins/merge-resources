@@ -8,12 +8,12 @@ import java.util.Collection;
 public abstract class SpringImportsMerger extends MetaInfServicesMerger {
 
     @Override
-    protected Collection<String> getIncludes() {
+    public Collection<String> getIncludes() {
         return singletonList("META-INF/spring/*.imports");
     }
 
     @Override
-    protected Collection<String> getExcludes() {
+    public Collection<String> getExcludes() {
         return emptyList();
     }
 

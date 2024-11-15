@@ -23,28 +23,28 @@ import org.gradle.api.file.RelativePath;
 public abstract class Log4j2PluginsMerger extends ResourceMerger {
 
     @Override
-    protected Collection<String> getIncludes() {
+    public Collection<String> getIncludes() {
         return ImmutableList.of("META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat");
     }
 
     @Override
-    protected void mergeTo(
-            RelativePath relativePath,
-            Collection<File> files,
-            OutputStream outputStream
+    public void mergeTo(
+        RelativePath relativePath,
+        Collection<File> files,
+        OutputStream outputStream
     ) throws Throwable {
         mergeLog4j2PluginsTo(
-                files.stream()
-                        .map(File::toPath)
-                        .collect(toList()),
-                outputStream
+            files.stream()
+                .map(File::toPath)
+                .collect(toList()),
+            outputStream
         );
     }
 
     @VisibleForTesting
     static void mergeLog4j2PluginsTo(
-            Collection<Path> paths,
-            OutputStream outputStream
+        Collection<Path> paths,
+        OutputStream outputStream
     ) throws Throwable {
         val pluginCache = new PluginCache();
 
