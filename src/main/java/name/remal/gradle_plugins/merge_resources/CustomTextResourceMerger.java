@@ -3,11 +3,11 @@ package name.remal.gradle_plugins.merge_resources;
 import static java.util.Collections.unmodifiableCollection;
 import static lombok.AccessLevel.PUBLIC;
 
-import java.io.File;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.Collection;
 import javax.inject.Inject;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +27,14 @@ abstract class CustomTextResourceMerger extends ResourceMerger {
     }
 
     @Override
-    public void mergeTo(
+    public void merge(
         RelativePath relativePath,
-        Collection<File> files,
+        Collection<Path> paths,
         OutputStream outputStream
     ) throws Throwable {
         try (val writer = new OutputStreamWriter(outputStream, charset)) {
             try (val printWriter = new PrintWriter(writer)) {
-                merger.mergeTo(relativePath, files, printWriter);
+                merger.mergeTo(relativePath, paths, printWriter);
             }
         }
     }

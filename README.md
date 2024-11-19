@@ -40,15 +40,15 @@ mergeResources {
   }
 
   // To merge all `*.jar` files with the same relative path:
-  addResourceMerger('**/*.jar') { RelativePath relativePath, Collection<File> files, OutputStream outputStream ->
+  addResourceMerger('**/*.jar') { RelativePath relativePath, Collection<Path> paths, OutputStream outputStream ->
     outputStream.write(new byte[0])
   }
 
   // To merge all `*.text` files with the same relative path:
-  addTextResourceMerger('**/*.jar', 'US-ASCII') { RelativePath relativePath, Collection<File> files, PrintWriter writer ->
+  addTextResourceMerger('**/*.jar', 'US-ASCII') { RelativePath relativePath, Collection<Path> paths, PrintWriter writer ->
     writer.println('test')
   }
-  addTextResourceMerger('**/*.jar' /* UTF-8 is default charset */) { RelativePath relativePath, Collection<File> files, PrintWriter writer ->
+  addTextResourceMerger('**/*.jar' /* UTF-8 is default charset */) { RelativePath relativePath, Collection<Path> paths, PrintWriter writer ->
     writer.println('test')
   }
 }
@@ -93,6 +93,10 @@ See [`org.springframework.boot.context.annotation.ImportCandidates`](https://doc
 See [documentation about Log4j plugin descriptor](https://logging.apache.org/log4j/2.x/manual/plugins.html#plugin-registry).
 
 # Migration guide
+
+## Version 3.* to 4.*
+
+`Path` is used for mergers instead of `File`.
 
 ## Version 2.* to 3.*
 

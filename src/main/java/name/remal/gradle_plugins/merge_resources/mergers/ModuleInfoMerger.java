@@ -13,7 +13,6 @@ import static name.remal.gradle_plugins.toolkit.ObjectUtils.isEmpty;
 import static name.remal.gradle_plugins.toolkit.PredicateUtils.not;
 
 import com.google.common.annotations.VisibleForTesting;
-import java.io.File;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -41,15 +40,13 @@ public abstract class ModuleInfoMerger extends ResourceMerger {
     }
 
     @Override
-    public void mergeTo(
+    public void merge(
         RelativePath relativePath,
-        Collection<File> files,
+        Collection<Path> paths,
         OutputStream outputStream
     ) throws Throwable {
         mergeModuleInfosTo(
-            files.stream()
-                .map(File::toPath)
-                .collect(toList()),
+            paths,
             outputStream
         );
     }

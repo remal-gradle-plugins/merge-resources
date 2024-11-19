@@ -1,6 +1,7 @@
 package name.remal.gradle_plugins.merge_resources;
 
 import static java.nio.file.Files.newOutputStream;
+import static java.util.stream.Collectors.toList;
 import static name.remal.gradle_plugins.toolkit.ObjectUtils.isEmpty;
 import static name.remal.gradle_plugins.toolkit.PathUtils.createParentDirectories;
 
@@ -110,7 +111,13 @@ class CopyTaskActionMerge extends AbstractCopyTaskAction {
         createParentDirectories(targetFilePath);
 
         try (val outputStream = newOutputStream(targetFilePath)) {
-            merger.mergeTo(relativePath, files, outputStream);
+            merger.merge(
+                relativePath,
+                files.stream()
+                    .map(File::toPath)
+                    .collect(toList()),
+                outputStream
+            );
         }
     }
 

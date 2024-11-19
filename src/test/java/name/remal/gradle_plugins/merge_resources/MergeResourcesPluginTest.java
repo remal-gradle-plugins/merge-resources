@@ -25,20 +25,20 @@ class MergeResourcesPluginTest {
     }
 
     @Test
-    void addResourceMergerDoesNotThorException() {
+    void addResourceMergerDoesNotThrowException() {
         val mergeResources = project.getExtensions().getByType(MergeResourcesExtension.class);
         assertDoesNotThrow(() ->
-            mergeResources.addResourceMerger("*.jar", (relativePath, files, outputStream) -> {
+            mergeResources.addResourceMerger("*.jar", (relativePath, paths, outputStream) -> {
                 throw new UnsupportedOperationException();
             })
         );
     }
 
     @Test
-    void addTextResourceMergerDoesNotThorException() {
+    void addTextResourceMergerDoesNotThrowException() {
         val mergeResources = project.getExtensions().getByType(MergeResourcesExtension.class);
         assertDoesNotThrow(() ->
-            mergeResources.addTextResourceMerger("*.txt", "UTF-8", (relativePath, files, writer) -> {
+            mergeResources.addTextResourceMerger("*.txt", "UTF-8", (relativePath, paths, writer) -> {
                 throw new UnsupportedOperationException();
             })
         );

@@ -5,13 +5,11 @@ import static java.lang.String.format;
 import static java.nio.file.Files.newInputStream;
 import static java.util.Collections.singletonList;
 import static java.util.Comparator.comparingInt;
-import static java.util.stream.Collectors.toList;
 import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeUtils.getAnnotationsCount;
 import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeUtils.getBytecodeAnnotations;
 import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeUtils.readClassNode;
 
 import com.google.common.annotations.VisibleForTesting;
-import java.io.File;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -29,15 +27,13 @@ public abstract class PackageInfoMerger extends ResourceMerger {
     }
 
     @Override
-    public void mergeTo(
+    public void merge(
         RelativePath relativePath,
-        Collection<File> files,
+        Collection<Path> paths,
         OutputStream outputStream
     ) throws Throwable {
         mergePackageInfosTo(
-            files.stream()
-                .map(File::toPath)
-                .collect(toList()),
+            paths,
             outputStream
         );
     }

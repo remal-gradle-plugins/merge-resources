@@ -4,12 +4,10 @@ import static java.lang.String.join;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newInputStream;
 import static java.util.Collections.singletonList;
-import static java.util.stream.Collectors.toList;
 import static name.remal.gradle_plugins.toolkit.FunctionUtils.toSubstringedBefore;
 import static name.remal.gradle_plugins.toolkit.InputOutputStreamUtils.readStringFromStream;
 
 import com.google.common.annotations.VisibleForTesting;
-import java.io.File;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -36,15 +34,13 @@ public abstract class MetaInfServicesMerger extends ResourceMerger {
     }
 
     @Override
-    public void mergeTo(
+    public void merge(
         RelativePath relativePath,
-        Collection<File> files,
+        Collection<Path> paths,
         OutputStream outputStream
     ) throws Throwable {
         mergeMetaInfServicesTo(
-            files.stream()
-                .map(File::toPath)
-                .collect(toList()),
+            paths,
             outputStream
         );
     }

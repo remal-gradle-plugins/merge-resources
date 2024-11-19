@@ -4,8 +4,8 @@ import static java.lang.String.format;
 import static java.util.Collections.emptyList;
 import static name.remal.gradle_plugins.toolkit.reflection.ReflectionUtils.unwrapGeneratedSubclass;
 
-import java.io.File;
 import java.io.OutputStream;
+import java.nio.file.Path;
 import java.util.Collection;
 import org.gradle.api.file.RelativePath;
 import org.gradle.api.provider.Property;
@@ -28,9 +28,9 @@ public abstract class ResourceMerger {
         return emptyList();
     }
 
-    public abstract void mergeTo(
+    public abstract void merge(
         RelativePath relativePath,
-        Collection<File> files,
+        Collection<Path> paths,
         OutputStream outputStream
     ) throws Throwable;
 
