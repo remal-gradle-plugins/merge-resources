@@ -6,6 +6,7 @@ org.ow2.asm:asm-bom:9.7.1:@pom
 org.ow2.asm:asm-tree:9.7.1
 org.ow2.asm:asm-util:9.7.1
 org.ow2.asm:asm:9.7.1
+zzzz-classes-relying-on-external-dependency:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.reflection.LatestLtsJdkModules:2be39cf9d8c00587adbdc12f36ef2392fef0945d08bb1014e917cc645191203e
 zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.CopyTaskActionMerge:da56b7b7d629728313d3a30409e99563f830087bc2891c27164edb5c0f08afc4
 zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.DebugUtils$1:b54ff2549f285d153dea71922b4ad8376a35e810e0fd19e71e3da5f0b67bd2d9
 zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.DebugUtils$IfDebugEnabled:29471005b12ce2bc1709cc810237935da9689c9e144fd5024f77ff950b0949b4
@@ -14,4 +15,8 @@ zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_reso
 zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.Version:578440e8e53b9bbb1b65575801b87f34eda9dfbe3e2beb95e12e9a1a5ef5ecb2
 zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.reflection.ReflectionUtils$1$1:88d5537dac2dd267aa02f530beeaa9aa1e3b83a569b23de4ac00e8ebe6105688
 zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.reflection.ReflectionUtils$1:ec45851f798f80192b85b504b7e0420107516c0a024b39976f6d444a5c9ceea3
-zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.reflection.ReflectionUtils:59077882e7fea8c404d1e66efa157a4820c7502be02fbfbb9bc6cfafa0a5307f
+zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.reflection.ReflectionUtils:224972bc945e259f4b8526801964ddf94f338be92dd7a1a6bb96ce7660f66047
+zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.reflection.ReflectionUtilsMethods:5ae48803c7b58ba7abbdc21686b93c7b315e77102c3cf8efe90f552881cd9a00
+zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.reflection.ReflectionUtilsMethods_8_lte$UrlResourcesOnlyClassLoader:70ca60544085fdbc7914075326eeb94456f80d1cb1992302a589e97d8b232194
+zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.reflection.ReflectionUtilsMethods_8_lte:16251e61a1bc5f112fd143668a18b76e8f3d38a122448609ea25f70b50a2aa86
+zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.internal._relocated.name.remal.gradle_plugins.toolkit.reflection.ReflectionUtilsMethods_9_gte:b3cd3840a8540ca36b49f148153f6725336a5663ebceb41b82dfa739b4431866
