@@ -1,11 +1,9 @@
 package name.remal.gradle_plugins.merge_resources;
 
-import static java.lang.Boolean.FALSE;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableCollection;
 import static java.util.stream.Collectors.toList;
-import static name.remal.gradle_plugins.toolkit.PredicateUtils.not;
 
 import java.nio.charset.Charset;
 import java.util.Collection;
@@ -24,13 +22,16 @@ import name.remal.gradle_plugins.merge_resources.mergers.SpringImportsMerger;
 import org.gradle.api.Action;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ListProperty;
+import org.gradle.api.tasks.Internal;
 import org.jetbrains.annotations.Unmodifiable;
 
 @Getter
 @Setter
 public abstract class MergeResourcesExtension {
 
+    @Internal
     public abstract ListProperty<ResourceMerger> getResourceMergers();
+
 
     public void addResourceMerger(
         Collection<String> includes,
@@ -112,6 +113,7 @@ public abstract class MergeResourcesExtension {
     }
 
 
+    @Internal
     private final MetaInfServicesMerger metaInfServices = getObjects().newInstance(MetaInfServicesMerger.class);
 
     public void metaInfServices(Action<MetaInfServicesMerger> action) {
@@ -119,6 +121,7 @@ public abstract class MergeResourcesExtension {
     }
 
 
+    @Internal
     private final PackageInfoMerger packageInfo = getObjects().newInstance(PackageInfoMerger.class);
 
     public void packageInfo(Action<PackageInfoMerger> action) {
@@ -126,6 +129,7 @@ public abstract class MergeResourcesExtension {
     }
 
 
+    @Internal
     private final ModuleInfoMerger moduleInfo = getObjects().newInstance(ModuleInfoMerger.class);
 
     public void moduleInfo(Action<ModuleInfoMerger> action) {
@@ -133,6 +137,7 @@ public abstract class MergeResourcesExtension {
     }
 
 
+    @Internal
     private final SpringFactoriesMerger springFactories = getObjects().newInstance(SpringFactoriesMerger.class);
 
     public void springFactories(Action<SpringFactoriesMerger> action) {
@@ -140,6 +145,7 @@ public abstract class MergeResourcesExtension {
     }
 
 
+    @Internal
     private final SpringImportsMerger springImports = getObjects().newInstance(SpringImportsMerger.class);
 
     public void springImports(Action<SpringImportsMerger> action) {
@@ -147,6 +153,7 @@ public abstract class MergeResourcesExtension {
     }
 
 
+    @Internal
     private final Log4j2PluginsMerger log4j2PluginsMerger = getObjects().newInstance(Log4j2PluginsMerger.class);
 
     public void log4j2PluginsMerger(Action<Log4j2PluginsMerger> action) {
@@ -154,6 +161,7 @@ public abstract class MergeResourcesExtension {
     }
 
 
+    @Internal
     @Unmodifiable
     public final Collection<ResourceMerger> getAllResourceMergers() {
         return unmodifiableCollection(
@@ -172,11 +180,12 @@ public abstract class MergeResourcesExtension {
         );
     }
 
+    @Internal
     @Unmodifiable
     public final Collection<ResourceMerger> getAllEnabledResourceMergers() {
         return unmodifiableCollection(
             getAllResourceMergers().stream()
-                .filter(not(merger -> FALSE.equals(merger.getEnabled().getOrNull())))
+                .filter(merger -> merger.getEnabled().getOrElse(true))
                 .collect(toList())
         );
     }

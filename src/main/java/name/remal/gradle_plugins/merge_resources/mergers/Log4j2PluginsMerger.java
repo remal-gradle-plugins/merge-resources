@@ -1,10 +1,10 @@
 package name.remal.gradle_plugins.merge_resources.mergers;
 
 import static java.nio.file.Files.newInputStream;
+import static java.util.Collections.singletonList;
 import static java.util.Locale.ROOT;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableList;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.OutputStream;
@@ -26,7 +26,7 @@ public abstract class Log4j2PluginsMerger extends ResourceMerger {
 
     @Override
     public Collection<String> getIncludes() {
-        return ImmutableList.of("META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat");
+        return singletonList("META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat");
     }
 
     @Override
