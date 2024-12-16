@@ -6,6 +6,12 @@
 
 [![configuration cache: supported from v2](https://img.shields.io/static/v1?label=configuration%20cache&message=supported+from+v2&color=success)](https://docs.gradle.org/current/userguide/configuration_cache.html)
 
+Usage:
+
+<!--plugin-usage:name.remal.merge-resources--><!--/plugin-usage-->
+
+&nbsp;
+
 This plugin configures all [`AbstractCopyTask`](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/AbstractCopyTask.html) tasks to merge files with the same [`RelativePath`](https://docs.gradle.org/current/javadoc/org/gradle/api/file/RelativePath.html).
 
 The main use cases are:
