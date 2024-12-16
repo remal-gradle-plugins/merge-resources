@@ -8,7 +8,13 @@
 
 Usage:
 
-<!--plugin-usage:name.remal.merge-resources--><!--/plugin-usage-->
+<!--plugin-usage:name.remal.merge-resources-->
+```groovy
+plugins {
+    id 'name.remal.merge-resources' version '4.0.2'
+}
+```
+<!--/plugin-usage-->
 
 &nbsp;
 
