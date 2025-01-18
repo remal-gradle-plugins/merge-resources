@@ -1,5 +1,6 @@
 package name.remal.gradle_plugins.merge_resources;
 
+import static java.lang.String.join;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
 import static java.util.stream.Collectors.toList;
@@ -23,16 +24,17 @@ class MergeResourcesPluginFunctionalTest {
             build.applyPlugin("name.remal.merge-resources");
             project.writeTextFile("dir1/META-INF/services/service", "impl1");
             project.writeTextFile("dir2/META-INF/services/service", "impl2");
-            build.appendBlock("tasks.create('copyTask', Copy)", it -> it.append(
-                "duplicatesStrategy = 'FAIL'",
-                "from('dir1')",
-                "from('dir2')",
-                "into('target')"
-            ));
-            build.registerDefaultTask("copyTask");
+            build.block("tasks.create('copyTask', Copy)", copyTask ->
+                copyTask.line(join("\n", new String[]{
+                    "duplicatesStrategy = 'FAIL'",
+                    "from('dir1')",
+                    "from('dir2')",
+                    "into('target')"
+                }))
+            );
         });
 
-        project.assertBuildSuccessfully();
+        project.assertBuildSuccessfully("copyTask");
 
         val targetPath = project.getProjectDir().toPath().resolve("target/META-INF/services/service");
         val content = new String(readAllBytes(targetPath), UTF_8);
