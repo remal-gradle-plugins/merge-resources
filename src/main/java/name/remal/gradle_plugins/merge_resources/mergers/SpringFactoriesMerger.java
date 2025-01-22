@@ -1,7 +1,6 @@
 package name.remal.gradle_plugins.merge_resources.mergers;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Collections.singletonList;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 import static name.remal.gradle_plugins.toolkit.ObjectUtils.defaultValue;
@@ -13,11 +12,11 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-import lombok.val;
 import name.remal.gradle_plugins.merge_resources.ResourceMerger;
 import name.remal.gradle_plugins.toolkit.ObjectUtils;
 import org.apache.commons.text.translate.AggregateTranslator;
@@ -41,7 +40,7 @@ public abstract class SpringFactoriesMerger extends ResourceMerger {
 
     @Override
     public Collection<String> getIncludes() {
-        return singletonList("META-INF/spring.factories");
+        return List.of("META-INF/spring.factories");
     }
 
     @Override
@@ -61,11 +60,11 @@ public abstract class SpringFactoriesMerger extends ResourceMerger {
         Collection<Path> paths,
         OutputStream outputStream
     ) throws Throwable {
-        val allServices = new TreeMap<String, Set<String>>();
-        for (val path : paths) {
-            val properties = loadProperties(path);
-            for (val service : properties.stringPropertyNames()) {
-                val impls = allServices.computeIfAbsent(service, __ -> new LinkedHashSet<>());
+        var allServices = new TreeMap<String, Set<String>>();
+        for (var path : paths) {
+            var properties = loadProperties(path);
+            for (var service : properties.stringPropertyNames()) {
+                var impls = allServices.computeIfAbsent(service, __ -> new LinkedHashSet<>());
                 IMPL_DELIMITER.splitAsStream(defaultValue(properties.getProperty(service)))
                     .map(String::trim)
                     .filter(ObjectUtils::isNotEmpty)
@@ -75,7 +74,7 @@ public abstract class SpringFactoriesMerger extends ResourceMerger {
 
         allServices.values().removeIf(ObjectUtils::isEmpty);
 
-        val content = new StringBuilder();
+        var content = new StringBuilder();
         allServices.forEach((service, impls) -> {
             if (content.length() > 0) {
                 content.append("\n\n");
@@ -83,7 +82,7 @@ public abstract class SpringFactoriesMerger extends ResourceMerger {
 
             content.append(ESCAPER.translate(service)).append(" = \\\n");
             boolean isFirstImpl = true;
-            for (val impl : impls) {
+            for (var impl : impls) {
                 if (isFirstImpl) {
                     isFirstImpl = false;
                 } else {
@@ -93,7 +92,7 @@ public abstract class SpringFactoriesMerger extends ResourceMerger {
                 content.append(ESCAPER.translate(impl));
             }
         });
-        val bytes = content.toString().getBytes(UTF_8);
+        var bytes = content.toString().getBytes(UTF_8);
         outputStream.write(bytes);
     }
 

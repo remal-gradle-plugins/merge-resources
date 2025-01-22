@@ -1,12 +1,12 @@
 package name.remal.gradle_plugins.merge_resources;
 
 import static java.lang.String.format;
-import static java.util.Collections.emptyList;
 import static name.remal.gradle_plugins.toolkit.reflection.ReflectionUtils.unwrapGeneratedSubclass;
 
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 import org.gradle.api.file.RelativePath;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Internal;
@@ -25,7 +25,7 @@ public abstract class ResourceMerger {
 
     @Internal
     public Collection<String> getExcludes() {
-        return emptyList();
+        return List.of();
     }
 
     public abstract void merge(

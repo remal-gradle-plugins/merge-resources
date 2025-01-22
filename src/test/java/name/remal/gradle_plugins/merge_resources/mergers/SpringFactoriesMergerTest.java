@@ -4,14 +4,13 @@ import static com.google.common.jimfs.Configuration.unix;
 import static java.lang.String.join;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.write;
-import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.google.common.jimfs.Jimfs;
 import java.io.ByteArrayOutputStream;
 import java.nio.file.FileSystem;
-import lombok.val;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +26,7 @@ class SpringFactoriesMergerTest {
 
     @Test
     void commentsBlankStringsAndDuplicatesAreRemoved() throws Throwable {
-        val path = fs.getPath("/1");
+        var path = fs.getPath("/1");
         write(path, join(
             "\n",
             "",
@@ -37,10 +36,10 @@ class SpringFactoriesMergerTest {
             ""
         ).getBytes(UTF_8));
 
-        try (val outputStream = new ByteArrayOutputStream()) {
+        try (var outputStream = new ByteArrayOutputStream()) {
             SpringFactoriesMerger.mergeSpringFactoriesTo(singletonList(path), outputStream);
 
-            val content = new String(outputStream.toByteArray(), UTF_8);
+            var content = outputStream.toString(UTF_8);
             assertThat(content).isEqualTo(join(
                 "\n",
                 "service = \\",
@@ -52,7 +51,7 @@ class SpringFactoriesMergerTest {
 
     @Test
     void codeFormatting() throws Throwable {
-        val path = fs.getPath("/1");
+        var path = fs.getPath("/1");
         write(path, join(
             "\n",
             "service2 = impl21, impl22",
@@ -60,10 +59,10 @@ class SpringFactoriesMergerTest {
             ""
         ).getBytes(UTF_8));
 
-        try (val outputStream = new ByteArrayOutputStream()) {
+        try (var outputStream = new ByteArrayOutputStream()) {
             SpringFactoriesMerger.mergeSpringFactoriesTo(singletonList(path), outputStream);
 
-            val content = new String(outputStream.toByteArray(), UTF_8);
+            var content = outputStream.toString(UTF_8);
             assertThat(content).isEqualTo(join(
                 "\n",
                 "service1 = \\",
@@ -79,22 +78,22 @@ class SpringFactoriesMergerTest {
 
     @Test
     void filesAreMerged() throws Throwable {
-        val path1 = fs.getPath("/1");
+        var path1 = fs.getPath("/1");
         write(path1, join(
             "\n",
             "service = impl1"
         ).getBytes(UTF_8));
 
-        val path2 = fs.getPath("/2");
+        var path2 = fs.getPath("/2");
         write(path2, join(
             "\n",
             "service = impl2"
         ).getBytes(UTF_8));
 
-        try (val outputStream = new ByteArrayOutputStream()) {
-            SpringFactoriesMerger.mergeSpringFactoriesTo(asList(path1, path2), outputStream);
+        try (var outputStream = new ByteArrayOutputStream()) {
+            SpringFactoriesMerger.mergeSpringFactoriesTo(List.of(path1, path2), outputStream);
 
-            val content = new String(outputStream.toByteArray(), UTF_8);
+            var content = outputStream.toString(UTF_8);
             assertThat(content).isEqualTo(join(
                 "\n",
                 "service = \\",

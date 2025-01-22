@@ -5,7 +5,6 @@ import static name.remal.gradle_plugins.toolkit.ObjectUtils.isNotEmpty;
 import javax.annotation.Nullable;
 import lombok.NonNull;
 import lombok.Value;
-import lombok.val;
 
 @Value
 class BytecodeModuleRequire {
@@ -21,10 +20,10 @@ class BytecodeModuleRequire {
 
     @Override
     public String toString() {
-        val sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.append("requires ");
 
-        val modifiersString = modifiers.toString();
+        var modifiersString = modifiers.toString();
         if (!modifiersString.isEmpty()) {
             sb.append(modifiersString).append(' ');
         }

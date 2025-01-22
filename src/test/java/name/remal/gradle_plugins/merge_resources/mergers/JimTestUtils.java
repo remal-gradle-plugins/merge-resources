@@ -15,7 +15,6 @@ import java.net.URLStreamHandler;
 import java.net.URLStreamHandlerFactory;
 import java.nio.file.FileSystem;
 import javax.annotation.Nullable;
-import lombok.val;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.parallel.Execution;
 
@@ -32,7 +31,7 @@ abstract class JimTestUtils {
 
     @AfterEach
     void closeCurrentFilesSystem() throws Throwable {
-        val fs = currentFileSystem.get();
+        var fs = currentFileSystem.get();
         if (fs != null) {
             fs.close();
         }
@@ -86,7 +85,7 @@ abstract class JimTestUtils {
                 return;
             }
 
-            val path = currentFileSystem.get().getPath(url.getPath());
+            var path = currentFileSystem.get().getPath(url.getPath());
             if (isDirectory(path)) {
                 throw new AssertionError("A directory: " + path);
             }

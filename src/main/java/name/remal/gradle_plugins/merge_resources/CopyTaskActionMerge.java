@@ -13,7 +13,6 @@ import java.util.Map;
 import lombok.CustomLog;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.val;
 import name.remal.gradle_plugins.toolkit.annotations.ReliesOnInternalGradleApi;
 import org.gradle.api.file.RelativePath;
 import org.gradle.api.tasks.AbstractCopyTask;
@@ -27,13 +26,13 @@ class CopyTaskActionMerge extends AbstractCopyTaskAction {
 
     @Override
     protected void execute(AbstractCopyTask task) {
-        val allFilesToMerge = getFilesToMerge(task, merger);
+        var allFilesToMerge = getFilesToMerge(task, merger);
         allFilesToMerge.entrySet().removeIf(entry -> {
-            val files = entry.getValue();
+            var files = entry.getValue();
             if (files.isEmpty()) {
                 return true;
             } else if (files.size() == 1) {
-                val relativePath = entry.getKey();
+                var relativePath = entry.getKey();
                 logger.debug(
                     "{}: only one file for relative path `{}`, skip merging: {}",
                     this,
@@ -53,9 +52,9 @@ class CopyTaskActionMerge extends AbstractCopyTaskAction {
         );
 
         task.exclude(element -> {
-            val filesToMerge = allFilesToMerge.get(element.getRelativePath());
+            var filesToMerge = allFilesToMerge.get(element.getRelativePath());
             if (filesToMerge != null) {
-                val file = element.getFile();
+                var file = element.getFile();
                 if (filesToMerge.contains(file)) {
                     logger.debug("{}: excluding file, as it was merged: {}", this, file);
                     return true;
@@ -67,7 +66,7 @@ class CopyTaskActionMerge extends AbstractCopyTaskAction {
 
     @ReliesOnInternalGradleApi
     private Map<RelativePath, Collection<File>> getFilesToMerge(AbstractCopyTask task, ResourceMerger merger) {
-        val includes = merger.getIncludes();
+        var includes = merger.getIncludes();
         if (isEmpty(includes)) {
             throw new IllegalStateException("No includes set for " + merger);
         }
@@ -83,9 +82,9 @@ class CopyTaskActionMerge extends AbstractCopyTaskAction {
                     return;
                 }
 
-                val relativePath = details.getRelativePath();
-                val filesToMerge = allFilesToMerge.computeIfAbsent(relativePath, __ -> new LinkedHashSet<>());
-                val file = details.getFile();
+                var relativePath = details.getRelativePath();
+                var filesToMerge = allFilesToMerge.computeIfAbsent(relativePath, __ -> new LinkedHashSet<>());
+                var file = details.getFile();
                 filesToMerge.add(file);
                 logger.debug(
                     "{}: found merging candidate for for relative path `{}`: {}",
@@ -107,10 +106,10 @@ class CopyTaskActionMerge extends AbstractCopyTaskAction {
     ) {
         logger.debug("{}: merging files for relative path `{}`: {}", this, relativePath, files);
 
-        val targetFilePath = new File(mergedFilesDir, relativePath.toString()).toPath();
+        var targetFilePath = new File(mergedFilesDir, relativePath.toString()).toPath();
         createParentDirectories(targetFilePath);
 
-        try (val outputStream = newOutputStream(targetFilePath)) {
+        try (var outputStream = newOutputStream(targetFilePath)) {
             merger.merge(
                 relativePath,
                 files.stream()

@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.val;
 import org.jetbrains.annotations.Contract;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -35,7 +34,7 @@ abstract class BytecodeUtils {
 
     @SneakyThrows
     public static ClassNode readClassNode(Path path) {
-        val bytes = readAllBytes(path);
+        var bytes = readAllBytes(path);
 
         final ClassReader classReader;
         try {
@@ -49,13 +48,13 @@ abstract class BytecodeUtils {
             );
         }
 
-        val classNode = new ClassNode();
+        var classNode = new ClassNode();
         classReader.accept(classNode, 0);
         return classNode;
     }
 
     public static byte[] getBytecode(ClassNode classNode) {
-        val classWriter = new ClassWriter(COMPUTE_MAXS | COMPUTE_FRAMES);
+        var classWriter = new ClassWriter(COMPUTE_MAXS | COMPUTE_FRAMES);
         ClassVisitor classVisitor = classWriter;
         if (IN_TEST) {
             classVisitor = wrapWithTestClassVisitors(classVisitor);
@@ -97,10 +96,10 @@ abstract class BytecodeUtils {
             return new BytecodeAnnotation(node.desc, emptyMap());
         }
 
-        val values = new LinkedHashMap<String, Object>();
+        var values = new LinkedHashMap<String, Object>();
         for (int i = 0; i < node.values.size(); i += 2) {
-            val name = (String) node.values.get(i);
-            val value = toBytecodeAnnotationValue(node.values.get(i + 1));
+            var name = (String) node.values.get(i);
+            var value = toBytecodeAnnotationValue(node.values.get(i + 1));
             values.put(name, value);
         }
         return new BytecodeAnnotation(node.desc, values);
@@ -113,7 +112,7 @@ abstract class BytecodeUtils {
                 .collect(toList());
 
         } else if (object instanceof String[]) {
-            val array = (String[]) object;
+            var array = (String[]) object;
             return new BytecodeAnnotationEnumValue(array[0], array[1]);
 
         } else if (object instanceof AnnotationNode) {

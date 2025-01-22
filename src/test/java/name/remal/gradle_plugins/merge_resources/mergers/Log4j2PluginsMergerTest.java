@@ -15,7 +15,6 @@ import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.Optional;
-import lombok.val;
 import name.remal.gradle_plugins.toolkit.UriUtils;
 import org.apache.logging.log4j.core.config.plugins.processor.PluginCache;
 import org.junit.jupiter.api.Test;
@@ -29,18 +28,18 @@ class Log4j2PluginsMergerTest {
     @Test
     @SuppressWarnings("resource")
     void equalToPluginCache() throws Throwable {
-        val urls = list(RESOURCE_LOADER
+        var urls = list(RESOURCE_LOADER
             .getResources("META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat")
         );
-        val paths = urls.stream()
+        var paths = urls.stream()
             .map(UriUtils::toUri)
             .map(sneakyThrows((URI uri) -> {
-                val file = substringBefore(uri.toString(), "!", "");
+                var file = substringBefore(uri.toString(), "!", "");
                 if (file.isEmpty()) {
                     return Paths.get(uri);
                 }
 
-                val fs = newFileSystem(URI.create(file), emptyMap());
+                var fs = newFileSystem(URI.create(file), emptyMap());
                 return fs.getPath(substringAfter(uri.toString(), "!", ""));
             }))
             .distinct()
@@ -50,15 +49,15 @@ class Log4j2PluginsMergerTest {
             .hasSizeGreaterThanOrEqualTo(3);
 
         final byte[] expectedBytes;
-        try (val outputStream = new ByteArrayOutputStream()) {
-            val pluginCache = new PluginCache();
+        try (var outputStream = new ByteArrayOutputStream()) {
+            var pluginCache = new PluginCache();
             pluginCache.loadCacheFiles(enumeration(urls));
             pluginCache.writeCache(outputStream);
             expectedBytes = outputStream.toByteArray();
         }
 
         final byte[] actualBytes;
-        try (val outputStream = new ByteArrayOutputStream()) {
+        try (var outputStream = new ByteArrayOutputStream()) {
             Log4j2PluginsMerger.mergeLog4j2PluginsTo(paths, outputStream);
             actualBytes = outputStream.toByteArray();
         }

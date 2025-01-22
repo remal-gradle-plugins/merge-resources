@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.val;
 import name.remal.gradle_plugins.merge_resources.mergers.Log4j2PluginsMerger;
 import name.remal.gradle_plugins.merge_resources.mergers.MetaInfServicesMerger;
 import name.remal.gradle_plugins.merge_resources.mergers.ModuleInfoMerger;
@@ -41,7 +40,7 @@ public abstract class MergeResourcesExtension {
             throw new IllegalArgumentException("includes must not be empty");
         }
 
-        val merger = getObjects().newInstance(
+        var merger = getObjects().newInstance(
             CustomResourceMerger.class,
             new LinkedHashSet<>(includes),
             resourceMerger
@@ -65,7 +64,7 @@ public abstract class MergeResourcesExtension {
             throw new IllegalArgumentException("includes must not be empty");
         }
 
-        val merger = getObjects().newInstance(
+        var merger = getObjects().newInstance(
             CustomTextResourceMerger.class,
             new LinkedHashSet<>(includes),
             charset,

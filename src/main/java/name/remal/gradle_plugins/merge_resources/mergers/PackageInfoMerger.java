@@ -3,7 +3,6 @@ package name.remal.gradle_plugins.merge_resources.mergers;
 import static com.google.common.io.ByteStreams.copy;
 import static java.lang.String.format;
 import static java.nio.file.Files.newInputStream;
-import static java.util.Collections.singletonList;
 import static java.util.Comparator.comparingInt;
 import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeUtils.getAnnotationsCount;
 import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeUtils.getBytecodeAnnotations;
@@ -14,7 +13,7 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import lombok.val;
+import java.util.List;
 import name.remal.gradle_plugins.merge_resources.ResourceMerger;
 import org.gradle.api.file.RelativePath;
 import org.objectweb.asm.tree.ClassNode;
@@ -23,7 +22,7 @@ public abstract class PackageInfoMerger extends ResourceMerger {
 
     @Override
     public Collection<String> getIncludes() {
-        return singletonList("**/package-info.class");
+        return List.of("**/package-info.class");
     }
 
     @Override
@@ -47,23 +46,23 @@ public abstract class PackageInfoMerger extends ResourceMerger {
             throw new IllegalArgumentException("paths must have multiple elements");
         }
 
-        val classNodes = new LinkedHashMap<Path, ClassNode>();
-        for (val path : paths) {
+        var classNodes = new LinkedHashMap<Path, ClassNode>();
+        for (var path : paths) {
             classNodes.put(path, readClassNode(path));
         }
 
-        val resultEntry = classNodes.entrySet().stream()
+        var resultEntry = classNodes.entrySet().stream()
             .max(comparingInt(entry -> getAnnotationsCount(entry.getValue())))
-            .get();
+            .orElseThrow();
 
-        val resultPath = resultEntry.getKey();
+        var resultPath = resultEntry.getKey();
         classNodes.keySet().removeIf(resultPath::equals);
 
-        val resultClassNode = resultEntry.getValue();
-        val resultAnnotations = getBytecodeAnnotations(resultClassNode);
+        var resultClassNode = resultEntry.getValue();
+        var resultAnnotations = getBytecodeAnnotations(resultClassNode);
         classNodes.forEach((path, classNode) -> {
-            val annotations = getBytecodeAnnotations(classNode);
-            for (val annotation : annotations) {
+            var annotations = getBytecodeAnnotations(classNode);
+            for (var annotation : annotations) {
                 if (!resultAnnotations.contains(annotation)) {
                     throw new ResourcesToMergeAreInconsistentException(format(
                         "%s contains annotation that does NOT present in %s: %s",
@@ -75,7 +74,7 @@ public abstract class PackageInfoMerger extends ResourceMerger {
             }
         });
 
-        try (val inputStream = newInputStream(resultPath)) {
+        try (var inputStream = newInputStream(resultPath)) {
             copy(inputStream, outputStream);
         }
     }

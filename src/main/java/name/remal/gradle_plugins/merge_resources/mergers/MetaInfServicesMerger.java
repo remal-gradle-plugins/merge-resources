@@ -2,18 +2,16 @@ package name.remal.gradle_plugins.merge_resources.mergers;
 
 import static java.lang.String.join;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.newInputStream;
-import static java.util.Collections.singletonList;
+import static java.nio.file.Files.readString;
 import static name.remal.gradle_plugins.toolkit.FunctionUtils.toSubstringedBefore;
-import static name.remal.gradle_plugins.toolkit.InputOutputStreamUtils.readStringFromStream;
 
 import com.google.common.annotations.VisibleForTesting;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.regex.Pattern;
-import lombok.val;
 import name.remal.gradle_plugins.merge_resources.ResourceMerger;
 import name.remal.gradle_plugins.toolkit.ObjectUtils;
 import org.gradle.api.file.RelativePath;
@@ -25,12 +23,12 @@ public abstract class MetaInfServicesMerger extends ResourceMerger {
 
     @Override
     public Collection<String> getIncludes() {
-        return singletonList("META-INF/services/*");
+        return List.of("META-INF/services/*");
     }
 
     @Override
     public Collection<String> getExcludes() {
-        return singletonList("META-INF/services/org.codehaus.groovy.runtime.ExtensionModule");
+        return List.of("META-INF/services/org.codehaus.groovy.runtime.ExtensionModule");
     }
 
     @Override
@@ -50,12 +48,9 @@ public abstract class MetaInfServicesMerger extends ResourceMerger {
         Collection<Path> paths,
         OutputStream outputStream
     ) throws Throwable {
-        val services = new LinkedHashSet<String>();
-        for (val path : paths) {
-            final String content;
-            try (val inputStream = newInputStream(path)) {
-                content = readStringFromStream(inputStream, UTF_8);
-            }
+        var services = new LinkedHashSet<String>();
+        for (var path : paths) {
+            var content = readString(path);
 
             NEW_LINES.splitAsStream(content)
                 .map(toSubstringedBefore("#"))
@@ -64,8 +59,8 @@ public abstract class MetaInfServicesMerger extends ResourceMerger {
                 .forEach(services::add);
         }
 
-        val mergedContent = join("\n", services);
-        val bytes = mergedContent.getBytes(UTF_8);
+        var mergedContent = join("\n", services);
+        var bytes = mergedContent.getBytes(UTF_8);
         outputStream.write(bytes);
     }
 

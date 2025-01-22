@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.google.common.base.Splitter;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import name.remal.gradle_plugins.toolkit.ObjectUtils;
 import name.remal.gradle_plugins.toolkit.testkit.functional.GradleProject;
 import org.junit.jupiter.api.Test;
@@ -36,9 +35,9 @@ class MergeResourcesPluginFunctionalTest {
 
         project.assertBuildSuccessfully("copyTask");
 
-        val targetPath = project.getProjectDir().toPath().resolve("target/META-INF/services/service");
-        val content = new String(readAllBytes(targetPath), UTF_8);
-        val implementations = Splitter.on('\n').splitToStream(content)
+        var targetPath = project.getProjectDir().toPath().resolve("target/META-INF/services/service");
+        var content = new String(readAllBytes(targetPath), UTF_8);
+        var implementations = Splitter.on('\n').splitToStream(content)
             .map(String::trim)
             .filter(ObjectUtils::isNotEmpty)
             .collect(toList());

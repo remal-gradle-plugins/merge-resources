@@ -1,11 +1,11 @@
 package name.remal.gradle_plugins.merge_resources;
 
-import static java.util.Collections.unmodifiableCollection;
 import static lombok.AccessLevel.PUBLIC;
 
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 import javax.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import org.gradle.api.file.RelativePath;
@@ -18,7 +18,7 @@ abstract class CustomResourceMerger extends ResourceMerger {
 
     @Override
     public Collection<String> getIncludes() {
-        return unmodifiableCollection(includes);
+        return List.copyOf(includes);
     }
 
     @Override

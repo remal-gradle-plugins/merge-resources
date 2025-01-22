@@ -6,7 +6,6 @@ import static name.remal.gradle_plugins.toolkit.testkit.ProjectValidations.execu
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import name.remal.gradle_plugins.toolkit.testkit.TaskValidations;
 import org.gradle.api.Project;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +29,7 @@ class MergeResourcesPluginTest {
 
     @Test
     void addResourceMergerDoesNotThrowException() {
-        val mergeResources = project.getExtensions().getByType(MergeResourcesExtension.class);
+        var mergeResources = project.getExtensions().getByType(MergeResourcesExtension.class);
         assertDoesNotThrow(() ->
             mergeResources.addResourceMerger("*.jar", (relativePath, paths, outputStream) -> {
                 throw new UnsupportedOperationException();
@@ -40,7 +39,7 @@ class MergeResourcesPluginTest {
 
     @Test
     void addTextResourceMergerDoesNotThrowException() {
-        val mergeResources = project.getExtensions().getByType(MergeResourcesExtension.class);
+        var mergeResources = project.getExtensions().getByType(MergeResourcesExtension.class);
         assertDoesNotThrow(() ->
             mergeResources.addTextResourceMerger("*.txt", "UTF-8", (relativePath, paths, writer) -> {
                 throw new UnsupportedOperationException();
@@ -54,10 +53,10 @@ class MergeResourcesPluginTest {
 
         executeAfterEvaluateActions(project);
 
-        val taskClassNamePrefix = packageNameOf(MergeResourcesPlugin.class) + '.';
+        var taskClassNamePrefix = packageNameOf(MergeResourcesPlugin.class) + '.';
         project.getTasks().stream()
             .filter(task -> {
-                val taskClass = unwrapGeneratedSubclass(task.getClass());
+                var taskClass = unwrapGeneratedSubclass(task.getClass());
                 return taskClass.getName().startsWith(taskClassNamePrefix);
             })
             .map(TaskValidations::markTaskDependenciesAsSkipped)

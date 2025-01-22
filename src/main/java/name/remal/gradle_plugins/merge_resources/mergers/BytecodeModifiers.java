@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import lombok.SneakyThrows;
 import lombok.Value;
-import lombok.val;
 import org.objectweb.asm.Opcodes;
 
 @Value
@@ -25,7 +24,7 @@ public class BytecodeModifiers {
             return "";
         }
 
-        val sb = new StringBuilder();
+        var sb = new StringBuilder();
         MODIFIER_DESCRIPTIONS.forEach((value, description) -> {
             if ((access & value) != 0) {
                 if (sb.length() > 0) {
@@ -43,14 +42,14 @@ public class BytecodeModifiers {
     @SneakyThrows
     private static Map<Integer, String> calculateModifierDescriptions() {
         Map<Integer, String> result = new TreeMap<>();
-        for (val field : Opcodes.class.getDeclaredFields()) {
+        for (var field : Opcodes.class.getDeclaredFields()) {
             if (isNotStatic(field)) {
                 continue;
             }
-            val prefix = "ACC_";
+            var prefix = "ACC_";
             if (field.getType() == int.class && field.getName().startsWith(prefix)) {
-                val value = (Integer) makeAccessible(field).get(null);
-                val description = UPPER_UNDERSCORE.to(LOWER_HYPHEN, field.getName().substring(prefix.length()));
+                var value = (Integer) makeAccessible(field).get(null);
+                var description = UPPER_UNDERSCORE.to(LOWER_HYPHEN, field.getName().substring(prefix.length()));
                 result.put(value, description);
             }
         }

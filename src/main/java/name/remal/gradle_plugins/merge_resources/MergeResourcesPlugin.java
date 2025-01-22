@@ -4,7 +4,6 @@ import static name.remal.gradle_plugins.toolkit.ObjectUtils.doNotInline;
 import static name.remal.gradle_plugins.toolkit.TaskUtils.doBeforeTaskExecution;
 
 import java.io.File;
-import lombok.val;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.AbstractCopyTask;
@@ -15,7 +14,7 @@ public abstract class MergeResourcesPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        val extension = project.getExtensions().create(MERGE_RESOURCES_EXTENSION_NAME, MergeResourcesExtension.class);
+        var extension = project.getExtensions().create(MERGE_RESOURCES_EXTENSION_NAME, MergeResourcesExtension.class);
         project.getTasks().withType(AbstractCopyTask.class).configureEach(task ->
             configureCopyTask(task, extension)
         );
@@ -29,10 +28,10 @@ public abstract class MergeResourcesPlugin implements Plugin<Project> {
     }
 
     private static void beforeTaskExecution(AbstractCopyTask task, MergeResourcesExtension extension) {
-        val mergedFilesDir = new File(task.getTemporaryDir().getAbsolutePath() + ".merged-files");
+        var mergedFilesDir = new File(task.getTemporaryDir().getAbsolutePath() + ".merged-files");
         task.from(mergedFilesDir);
 
-        val mergers = extension.getAllEnabledResourceMergers();
+        var mergers = extension.getAllEnabledResourceMergers();
         mergers.forEach(merger ->
             task.doFirst(
                 merger.toString(),

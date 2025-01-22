@@ -106,6 +106,11 @@ See [documentation about Log4j plugin descriptor](https://logging.apache.org/log
 
 # Migration guide
 
+## Version 4.* to 5.*
+
+The minimum Java version is 11 (from 8).
+The minimum Gradle version is 7.0 (from 6.0).
+
 ## Version 3.* to 4.*
 
 `Path` is used for mergers instead of `File`.

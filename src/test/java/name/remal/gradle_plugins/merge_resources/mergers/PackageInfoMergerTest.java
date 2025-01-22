@@ -2,7 +2,6 @@ package name.remal.gradle_plugins.merge_resources.mergers;
 
 import static com.google.common.jimfs.Configuration.unix;
 import static java.nio.file.Files.write;
-import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeUtils.getBytecode;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +15,7 @@ import static org.objectweb.asm.Type.getDescriptor;
 import com.google.common.jimfs.Jimfs;
 import java.io.ByteArrayOutputStream;
 import java.nio.file.FileSystem;
-import lombok.val;
+import java.util.List;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,37 +38,37 @@ class PackageInfoMergerTest {
     @Test
     @SuppressWarnings("VariableDeclarationUsageDistance")
     void packageInfoWithMostNumberOfAnnotationsIsTaken() throws Throwable {
-        val path1 = fs.getPath("/1");
-        val classNode1 = new ClassNode();
+        var path1 = fs.getPath("/1");
+        var classNode1 = new ClassNode();
         classNode1.version = V1_8;
         classNode1.access = ACC_INTERFACE | ACC_ABSTRACT | ACC_SYNTHETIC;
         classNode1.name = "pkg/package-info";
         classNode1.superName = "java/lang/Object";
-        classNode1.visibleAnnotations = asList(
+        classNode1.visibleAnnotations = List.of(
             new AnnotationNode(getDescriptor(VisibleForTesting.class)),
             new AnnotationNode(getDescriptor(NotNull.class)),
             new AnnotationNode(getDescriptor(Contract.class))
         );
-        val bytes1 = getBytecode(classNode1);
+        var bytes1 = getBytecode(classNode1);
         write(path1, bytes1);
 
-        val path2 = fs.getPath("/2");
-        val classNode2 = new ClassNode();
+        var path2 = fs.getPath("/2");
+        var classNode2 = new ClassNode();
         classNode2.version = V1_8;
         classNode2.access = ACC_INTERFACE | ACC_ABSTRACT | ACC_SYNTHETIC;
         classNode2.name = "pkg/package-info";
         classNode2.superName = "java/lang/Object";
-        classNode2.visibleAnnotations = asList(
+        classNode2.visibleAnnotations = List.of(
             new AnnotationNode(getDescriptor(VisibleForTesting.class)),
             new AnnotationNode(getDescriptor(NotNull.class))
         );
-        val bytes2 = getBytecode(classNode2);
+        var bytes2 = getBytecode(classNode2);
         write(path2, bytes2);
 
-        try (val outputStream = new ByteArrayOutputStream()) {
-            PackageInfoMerger.mergePackageInfosTo(asList(path1, path2), outputStream);
+        try (var outputStream = new ByteArrayOutputStream()) {
+            PackageInfoMerger.mergePackageInfosTo(List.of(path1, path2), outputStream);
 
-            val bytes = outputStream.toByteArray();
+            var bytes = outputStream.toByteArray();
             assertThat(bytes).isEqualTo(bytes1);
         }
     }
@@ -77,21 +76,21 @@ class PackageInfoMergerTest {
     @Test
     @SuppressWarnings({"try", "VariableDeclarationUsageDistance"})
     void packageInfoWithDifferentAnnotationsAreNotMerged() throws Throwable {
-        val path1 = fs.getPath("/1");
-        val classNode1 = new ClassNode();
+        var path1 = fs.getPath("/1");
+        var classNode1 = new ClassNode();
         classNode1.version = V1_8;
         classNode1.access = ACC_INTERFACE | ACC_ABSTRACT | ACC_SYNTHETIC;
         classNode1.name = "pkg/package-info";
         classNode1.superName = "java/lang/Object";
-        classNode1.visibleAnnotations = asList(
+        classNode1.visibleAnnotations = List.of(
             new AnnotationNode(getDescriptor(NotNull.class)),
             new AnnotationNode(getDescriptor(Contract.class))
         );
-        val bytes1 = getBytecode(classNode1);
+        var bytes1 = getBytecode(classNode1);
         write(path1, bytes1);
 
-        val path2 = fs.getPath("/2");
-        val classNode2 = new ClassNode();
+        var path2 = fs.getPath("/2");
+        var classNode2 = new ClassNode();
         classNode2.version = V1_8;
         classNode2.access = ACC_INTERFACE | ACC_ABSTRACT | ACC_SYNTHETIC;
         classNode2.name = "pkg/package-info";
@@ -99,12 +98,12 @@ class PackageInfoMergerTest {
         classNode2.visibleAnnotations = singletonList(
             new AnnotationNode(getDescriptor(Nullable.class))
         );
-        val bytes2 = getBytecode(classNode2);
+        var bytes2 = getBytecode(classNode2);
         write(path2, bytes2);
 
-        try (val outputStream = new ByteArrayOutputStream()) {
+        try (var outputStream = new ByteArrayOutputStream()) {
             assertThrows(ResourcesToMergeAreInconsistentException.class, () ->
-                PackageInfoMerger.mergePackageInfosTo(asList(path1, path2), outputStream)
+                PackageInfoMerger.mergePackageInfosTo(List.of(path1, path2), outputStream)
             );
         }
     }
