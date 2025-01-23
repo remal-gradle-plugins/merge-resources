@@ -2,7 +2,7 @@ package name.remal.gradle_plugins.merge_resources.mergers;
 
 import static com.google.common.jimfs.Configuration.unix;
 import static java.nio.file.Files.write;
-import static java.util.Collections.singletonList;
+import static name.remal.gradle_plugins.build_time_constants.api.BuildTimeConstants.getClassDescriptor;
 import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeUtils.getBytecode;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,7 +10,6 @@ import static org.objectweb.asm.Opcodes.ACC_ABSTRACT;
 import static org.objectweb.asm.Opcodes.ACC_INTERFACE;
 import static org.objectweb.asm.Opcodes.ACC_SYNTHETIC;
 import static org.objectweb.asm.Opcodes.V1_8;
-import static org.objectweb.asm.Type.getDescriptor;
 
 import com.google.common.jimfs.Jimfs;
 import java.io.ByteArrayOutputStream;
@@ -45,9 +44,9 @@ class PackageInfoMergerTest {
         classNode1.name = "pkg/package-info";
         classNode1.superName = "java/lang/Object";
         classNode1.visibleAnnotations = List.of(
-            new AnnotationNode(getDescriptor(VisibleForTesting.class)),
-            new AnnotationNode(getDescriptor(NotNull.class)),
-            new AnnotationNode(getDescriptor(Contract.class))
+            new AnnotationNode(getClassDescriptor(VisibleForTesting.class)),
+            new AnnotationNode(getClassDescriptor(NotNull.class)),
+            new AnnotationNode(getClassDescriptor(Contract.class))
         );
         var bytes1 = getBytecode(classNode1);
         write(path1, bytes1);
@@ -59,8 +58,8 @@ class PackageInfoMergerTest {
         classNode2.name = "pkg/package-info";
         classNode2.superName = "java/lang/Object";
         classNode2.visibleAnnotations = List.of(
-            new AnnotationNode(getDescriptor(VisibleForTesting.class)),
-            new AnnotationNode(getDescriptor(NotNull.class))
+            new AnnotationNode(getClassDescriptor(VisibleForTesting.class)),
+            new AnnotationNode(getClassDescriptor(NotNull.class))
         );
         var bytes2 = getBytecode(classNode2);
         write(path2, bytes2);
@@ -83,8 +82,8 @@ class PackageInfoMergerTest {
         classNode1.name = "pkg/package-info";
         classNode1.superName = "java/lang/Object";
         classNode1.visibleAnnotations = List.of(
-            new AnnotationNode(getDescriptor(NotNull.class)),
-            new AnnotationNode(getDescriptor(Contract.class))
+            new AnnotationNode(getClassDescriptor(NotNull.class)),
+            new AnnotationNode(getClassDescriptor(Contract.class))
         );
         var bytes1 = getBytecode(classNode1);
         write(path1, bytes1);
@@ -95,8 +94,8 @@ class PackageInfoMergerTest {
         classNode2.access = ACC_INTERFACE | ACC_ABSTRACT | ACC_SYNTHETIC;
         classNode2.name = "pkg/package-info";
         classNode2.superName = "java/lang/Object";
-        classNode2.visibleAnnotations = singletonList(
-            new AnnotationNode(getDescriptor(Nullable.class))
+        classNode2.visibleAnnotations = List.of(
+            new AnnotationNode(getClassDescriptor(Nullable.class))
         );
         var bytes2 = getBytecode(classNode2);
         write(path2, bytes2);
