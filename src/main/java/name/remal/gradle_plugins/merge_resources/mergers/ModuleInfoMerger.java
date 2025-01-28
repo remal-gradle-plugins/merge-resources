@@ -1,6 +1,7 @@
 package name.remal.gradle_plugins.merge_resources.mergers;
 
 import static java.lang.String.format;
+import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeUtils.getBytecode;
@@ -9,7 +10,6 @@ import static name.remal.gradle_plugins.merge_resources.mergers.BytecodeUtils.re
 import static name.remal.gradle_plugins.merge_resources.mergers.Utils.distinctBy;
 import static name.remal.gradle_plugins.merge_resources.mergers.Utils.removeFirst;
 import static name.remal.gradle_plugins.toolkit.ObjectUtils.isEmpty;
-import static name.remal.gradle_plugins.toolkit.PredicateUtils.not;
 
 import com.google.common.annotations.VisibleForTesting;
 import java.io.OutputStream;
