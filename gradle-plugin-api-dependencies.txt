@@ -6,4 +6,4 @@ org.ow2.asm:asm-bom:9.7.1:@pom
 org.ow2.asm:asm-tree:9.7.1
 org.ow2.asm:asm-util:9.7.1
 org.ow2.asm:asm:9.7.1
-zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.CopyTaskActionMerge:451b920c6e419bf9a176ee49a2b6c656ab72523c84411db0dc8979db3f56a391
+zzzz-classes-relying-on-gradle-internal-api:name.remal.gradle_plugins.merge_resources.CopyTaskActionMerge:e96703bb7e2b554c45fc125e8f37a240fcdba6c68905b27374174700d10c0086
