@@ -11,7 +11,7 @@ Usage:
 <!--plugin-usage:name.remal.merge-resources-->
 ```groovy
 plugins {
-    id 'name.remal.merge-resources' version '5.0.0'
+    id 'name.remal.merge-resources' version '5.0.1'
 }
 ```
 <!--/plugin-usage-->
