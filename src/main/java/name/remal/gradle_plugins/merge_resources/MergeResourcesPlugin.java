@@ -21,9 +21,8 @@ public abstract class MergeResourcesPlugin implements Plugin<Project> {
     }
 
     private static void configureCopyTask(AbstractCopyTask task, MergeResourcesExtension extension) {
-        doBeforeTaskExecution(
-            task, it ->
-                beforeTaskExecution(it, extension)
+        doBeforeTaskExecution(task, it ->
+            beforeTaskExecution(it, extension)
         );
     }
 
