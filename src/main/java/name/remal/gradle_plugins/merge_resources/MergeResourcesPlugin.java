@@ -1,7 +1,9 @@
 package name.remal.gradle_plugins.merge_resources;
 
+import static name.remal.gradle_plugins.build_time_constants.api.BuildTimeConstants.getStringProperty;
 import static name.remal.gradle_plugins.toolkit.ObjectUtils.doNotInline;
 import static name.remal.gradle_plugins.toolkit.TaskUtils.doBeforeTaskExecution;
+import static name.remal.gradle_plugins.toolkit.TaskUtils.isTaskConfigurable;
 
 import java.io.File;
 import org.gradle.api.Plugin;
@@ -26,9 +28,19 @@ public abstract class MergeResourcesPlugin implements Plugin<Project> {
         );
     }
 
+    @SuppressWarnings("java:S2629")
     private static void beforeTaskExecution(AbstractCopyTask task, MergeResourcesExtension extension) {
         var mergedFilesDir = new File(task.getTemporaryDir().getAbsolutePath() + ".merged-files");
         task.from(mergedFilesDir);
+
+        if (!isTaskConfigurable(task)) {
+            task.getLogger().warn(
+                "Resources can't be merged, as task is not configurable."
+                    + " If you see this message, please report it to {}.",
+                getStringProperty("repository.html-url")
+            );
+            return;
+        }
 
         var mergers = extension.getAllEnabledResourceMergers();
         mergers.forEach(merger ->
