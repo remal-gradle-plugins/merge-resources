@@ -27,7 +27,7 @@ apply plugin: 'name.remal.toolkit.build-logic'
 
 apply plugin: 'java-gradle-plugin'
 
-String log4j2Version = '2.25.0'
+String log4j2Version = '2.25.1'
 
 dependencies {
     compileOnlyAll 'org.osgi:osgi.annotation:8.1.0'
