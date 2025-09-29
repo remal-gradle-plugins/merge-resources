@@ -14,7 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("java:S5778")
+@SuppressWarnings({"java:S5778", "StringJoin"})
 class MetaInfServicesMergerTest {
 
     final FileSystem fs = Jimfs.newFileSystem(unix());
@@ -40,7 +40,7 @@ class MetaInfServicesMergerTest {
         try (var outputStream = new ByteArrayOutputStream()) {
             MetaInfServicesMerger.mergeMetaInfServicesTo(singletonList(path), outputStream);
 
-            var content = new String(outputStream.toByteArray(), UTF_8);
+            var content = outputStream.toString(UTF_8);
             assertThat(content).isEqualTo(join(
                 "\n",
                 "impl"
