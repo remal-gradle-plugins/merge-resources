@@ -14,7 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("java:S5778")
+@SuppressWarnings({"java:S5778", "StringJoin"})
 class SpringFactoriesMergerTest {
 
     final FileSystem fs = Jimfs.newFileSystem(unix());
