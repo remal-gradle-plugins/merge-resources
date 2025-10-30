@@ -51,7 +51,6 @@ gradlePlugin {
             id = 'name.remal.merge-resources'
             implementationClass = 'name.remal.gradle_plugins.merge_resources.MergeResourcesPlugin'
             displayName = 'Merge resources'
-            description = property('repository-description')
         }
     }
 }
