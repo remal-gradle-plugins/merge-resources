@@ -6,16 +6,16 @@ import static name.remal.gradle_plugins.toolkit.TaskUtils.doBeforeTaskExecution;
 import static name.remal.gradle_plugins.toolkit.TaskUtils.isTaskConfigurable;
 
 import java.io.File;
-import org.gradle.api.Plugin;
+import name.remal.gradle_plugins.toolkit.AbstractSettingsAwarePlugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.AbstractCopyTask;
 
-public abstract class MergeResourcesPlugin implements Plugin<Project> {
+public abstract class MergeResourcesPlugin extends AbstractSettingsAwarePlugin {
 
     public static final String MERGE_RESOURCES_EXTENSION_NAME = doNotInline("mergeResources");
 
     @Override
-    public void apply(Project project) {
+    protected void applyToProject(Project project) {
         var extension = project.getExtensions().create(MERGE_RESOURCES_EXTENSION_NAME, MergeResourcesExtension.class);
         project.getTasks().withType(AbstractCopyTask.class).configureEach(task ->
             configureCopyTask(task, extension)
