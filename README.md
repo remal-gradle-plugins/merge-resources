@@ -1,6 +1,6 @@
 **Tested on Java LTS versions from <!--property:java-runtime.min-version-->11<!--/property--> to <!--property:java-runtime.max-version-->27<!--/property-->.**
 
-**Tested on Gradle versions from <!--property:gradle-api.min-version-->7.0<!--/property--> to <!--property:gradle-api.max-version-->9.8.1<!--/property-->.**
+**Tested on Gradle versions from <!--property:gradle-api.min-version-->7.0<!--/property--> to <!--property:gradle-api.max-version-->9.8.2<!--/property-->.**
 
 # `name.remal.merge-resources` plugin
 
@@ -11,7 +11,7 @@ Usage:
 <!--plugin-usage:name.remal.merge-resources-->
 ```groovy
 plugins {
-    id 'name.remal.merge-resources' version '5.0.7'
+    id 'name.remal.merge-resources' version '5.0.8'
 }
 ```
 <!--/plugin-usage-->
